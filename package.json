@@ -1,0 +1,29 @@
+{
+  "name": "data-mining-assignment-1",
+  "version": "1.0.0",
+  "description": "Finding Similar Items: Textually Similar Documents",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "npm run build && node ./build/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rigvedpatki/data-mining-assignment-1.git"
+  },
+  "author": "Rigved Patki <rigved.patki@gmail.com>",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/rigvedpatki/data-mining-assignment-1/issues"
+  },
+  "homepage": "https://github.com/rigvedpatki/data-mining-assignment-1#readme",
+  "dependencies": {
+    "adler-32": "^1.2.0",
+    "lodash": "^4.17.11"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.118",
+    "@types/node": "^10.12.2",
+    "typescript": "^3.1.6"
+  }
+}
