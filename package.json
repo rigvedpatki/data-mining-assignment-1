@@ -19,10 +19,11 @@
   "homepage": "https://github.com/rigvedpatki/data-mining-assignment-1#readme",
   "dependencies": {
     "adler-32": "^1.2.0",
-    "lodash": "^4.17.11"
+    "commander": "^2.19.0",
+    "inquirer": "^6.2.0"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.118",
+    "@types/inquirer": "0.0.43",
     "@types/node": "^10.12.2",
     "typescript": "^3.1.6"
   }

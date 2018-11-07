@@ -1,24 +1,16 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import compareSets from './compare-sets';
-import _ from 'lodash';
 import compareSignatures from './compare-signatures';
 import minhash from './minhash';
-import { Index, insertIntoLSHIndex, Band } from './lsh';
+import { insertIntoLSHIndex } from './lsh';
 import shingling from './shingling';
+import { Document, Result, Index } from './types';
+import config from './config';
 
-interface Document {
-  filePath: string;
-  content: string;
-  shinglesArray: string[];
-  shingles: Set<string>;
-  hashedShingles: number[];
-  minHashSignatures: number[];
-}
+const k = config.K;
 
 const DATA_PATH = path.resolve(__dirname, '../data');
-
-const k = 4;
 
 const documents: Document[] = [];
 
@@ -43,13 +35,6 @@ for (let file of dataFiles) {
     hashedShingles,
     minHashSignatures
   });
-}
-
-interface Result {
-  firstDocument: string;
-  secondDocument: string;
-  jaccardSimilarity: number;
-  minHashSimilarity: number;
 }
 
 const results: Result[] = [];
@@ -77,14 +62,10 @@ for (let [i, docA] of documents.entries()) {
   }
 }
 
-console.log(`Length of Results : ${results.length}`);
-
-const threshHold = 0.7;
-
 const SimilarDocuments = results.filter(
   result =>
-    result.jaccardSimilarity >= threshHold ||
-    result.minHashSimilarity >= threshHold
+    result.jaccardSimilarity >= config.JACCARD_SIMILARITY_THRESHOLD ||
+    result.minHashSimilarity >= config.MINHASH_SIMILARITY_THRESHOLD
 );
 
 let index: Index = {
@@ -95,8 +76,6 @@ for (let doc of documents) {
   let fileName = doc.filePath.replace(/^.*[\\\/]/, '');
   index = insertIntoLSHIndex(fileName, doc.minHashSignatures, index);
 }
-
-let lshResults: Band[] = [];
 
 for (let [i, docA] of documents.entries()) {
   for (let [j, docB] of documents.entries()) {
@@ -119,7 +98,9 @@ for (let [i, docA] of documents.entries()) {
   }
 }
 
-fs.writeFileSync('output.txt', JSON.stringify(lshResults, null, 2));
+// fs.writeFileSync('output.txt', JSON.stringify(lshResults, null, 2));
+
+console.log(`Length of Results : ${results.length}`);
 
 console.log(`Length of Results : ${SimilarDocuments.length}`);
 

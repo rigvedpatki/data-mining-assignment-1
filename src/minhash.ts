@@ -1,6 +1,8 @@
-const maxShinglePossible = Math.pow(2, 32) - 1;
-const nextPrime = 4294967311;
-const numberOfHashes = 256;
+import config from './config';
+
+const maxPossibleShingles = config.MINHASH_MAX_POSSIBLE_SHINGLES;
+const nextPrime = config.MINHASH_NEXT_PRIME;
+const numberOfHashes = config.MINHASH_NUMBER_OF_HASHES;
 
 // generates a random number between max and min included
 const getRandomIntBetween = (min: number, max: number) => {
@@ -23,8 +25,8 @@ const pickRandomCoeffs = (k: number, maxShingle: number): number[] => {
 };
 
 // getting coefficients
-const coeffA = pickRandomCoeffs(numberOfHashes, maxShinglePossible);
-const coeffB = pickRandomCoeffs(numberOfHashes, maxShinglePossible);
+const coeffA = pickRandomCoeffs(numberOfHashes, maxPossibleShingles);
+const coeffB = pickRandomCoeffs(numberOfHashes, maxPossibleShingles);
 
 const minhash = (shingles: number[]): number[] => {
   const signatures: number[] = [];

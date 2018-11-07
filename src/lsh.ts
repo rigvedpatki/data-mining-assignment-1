@@ -1,4 +1,7 @@
-const bandSize = 2;
+import { Index } from './types';
+import config from './config';
+
+const bandSize = config.LSH_BAND_SIZE;
 
 const getHashbands = (minhash: number[]): string[] => {
   const hashBands: string[] = [];
@@ -10,14 +13,6 @@ const getHashbands = (minhash: number[]): string[] => {
   }
   return hashBands;
 };
-
-export interface Band {
-  hash: string;
-  fileNames: string[];
-}
-export interface Index {
-  bands: Band[];
-}
 
 export const insertIntoLSHIndex = (
   fileName: string,
