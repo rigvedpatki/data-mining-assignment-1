@@ -1,7 +1,11 @@
-.PHONY: clean build deploy result
+.PHONY: clean build deploy result install
 
 clean:
-	rm -rf build
+	rm -rf build && \
+	rm -rf node_modules
+
+install:
+	npm install
 
 build: 
 	npm run build
