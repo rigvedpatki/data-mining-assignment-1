@@ -42,8 +42,6 @@ for (let file of dataFiles) {
 
 const index = insertIntoLSHIndex(documents);
 
-fs.writeFileSync('output.txt', JSON.stringify(index, null, 2));
-
 const results: Result[] = [];
 
 for (let [i, docA] of documents.entries()) {
@@ -98,5 +96,5 @@ SimilarDocuments.forEach(doc => {
   finalResults =
     `\n Results : \n ${JSON.stringify(doc, null, 2)}` + finalResults;
 });
-fs.writeFileSync('output.txt', lshReshult + finalResults);
+fs.writeFileSync('output.txt', finalResults + lshReshult);
 console.timeEnd('data-mining-assignment-1');
