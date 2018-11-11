@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "npm run build && node ./build/index.js"
+    "start": "node ./build/index.js"
   },
   "repository": {
     "type": "git",
@@ -18,13 +18,11 @@
   },
   "homepage": "https://github.com/rigvedpatki/data-mining-assignment-1#readme",
   "dependencies": {
-    "adler-32": "^1.2.0",
-    "commander": "^2.19.0",
-    "inquirer": "^6.2.0"
+    "adler-32": "^1.2.0"
   },
   "devDependencies": {
-    "@types/inquirer": "0.0.43",
     "@types/node": "^10.12.2",
+    "ts-node": "^7.0.1",
     "typescript": "^3.1.6"
   }
 }

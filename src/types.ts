@@ -5,6 +5,7 @@ export interface Document {
   shingles: Set<string>;
   hashedShingles: number[];
   minHashSignatures: number[];
+  lshHashBands: string[];
 }
 
 export interface Result {
@@ -14,10 +15,11 @@ export interface Result {
   minHashSimilarity: number;
 }
 
+export interface Index {
+  bands: Band[];
+}
+
 export interface Band {
   hash: string;
   fileNames: string[];
-}
-export interface Index {
-  bands: Band[];
 }

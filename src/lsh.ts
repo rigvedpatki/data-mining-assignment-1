@@ -1,9 +1,9 @@
-import { Index } from './types';
 import config from './config';
+import { Document } from './types';
 
 const bandSize = config.LSH_BAND_SIZE;
 
-const getHashbands = (minhash: number[]): string[] => {
+export const getHashbands = (minhash: number[]): string[] => {
   const hashBands: string[] = [];
   for (let i = 0; i < minhash.length / bandSize; i++) {
     let start = i * bandSize;
@@ -14,19 +14,19 @@ const getHashbands = (minhash: number[]): string[] => {
   return hashBands;
 };
 
-export const insertIntoLSHIndex = (
-  fileName: string,
-  minhash: number[],
-  index: Index
-) => {
-  let hashBands = getHashbands(minhash);
-  for (let hashBand of hashBands) {
-    for (let band of index.bands) {
-      if (band.hash === hashBand) {
-        band.fileNames.push(fileName);
+export const insertIntoLSHIndex = (documents: Document[]) => {
+  let index: any = {};
+
+  for (let doc of documents) {
+    for (let i = 0; i < doc.lshHashBands.length; i++) {
+      let band = doc.lshHashBands[i];
+      if (Array.isArray(index[band])) {
+        index[band].push(doc.filePath.replace(/^.*[\\\/]/, ''));
+      } else {
+        index[band] = [doc.filePath.replace(/^.*[\\\/]/, '')];
       }
     }
-    index.bands.push({ hash: hashBand, fileNames: [fileName] });
   }
+
   return index;
 };
