@@ -73,7 +73,8 @@ const SimilarDocuments = results.filter(
     result.jaccardSimilarity >= config.JACCARD_SIMILARITY_THRESHOLD ||
     result.minHashSimilarity >= config.MINHASH_SIMILARITY_THRESHOLD
 );
-let lshReshult = '';
+let lshReshult =
+  '\n\n#################### LSH Matches for each hashband ####################\n\n';
 for (let doc of documents) {
   let matches: any = {};
   let hashbands = doc.lshHashBands;
@@ -82,19 +83,21 @@ for (let doc of documents) {
     for (var j = 0; j < index[band].length; j++) {
       matches[index[band][j]] = true;
     }
+    lshReshult =
+      lshReshult +
+      `\nLSH HashBand ${hashbands[i]} is present in : \n   ${JSON.stringify(
+        matches,
+        null,
+        2
+      )}`;
   }
-
-  lshReshult =
-    `\nMatches for ${doc.filePath.replace(
-      /^.*[\\\/]/,
-      ''
-    )}: \n   ${JSON.stringify(matches, null, 2)}` + lshReshult;
 }
 
-let finalResults = '';
+let finalResults =
+  '\n\n####################### Jaccard Similarity for hash of k-shingles and minhash #####################\n\n';
 SimilarDocuments.forEach(doc => {
   finalResults =
-    `\n Results : \n ${JSON.stringify(doc, null, 2)}` + finalResults;
+    finalResults + `\n Results : \n ${JSON.stringify(doc, null, 2)}`;
 });
 fs.writeFileSync('output.txt', finalResults + lshReshult);
 console.timeEnd('data-mining-assignment-1');
